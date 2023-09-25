@@ -170,6 +170,15 @@ label {
   transition: all 0.3s ease;
 }
 
+.foot {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  font-family: 'Courier New', Courier, monospace;
+  letter-spacing: 3px;
+}
+
+
 .scrolled-nav {
   backdrop-filter: blur(5px);
   background-color: rgba(1,1,1,0.5);
