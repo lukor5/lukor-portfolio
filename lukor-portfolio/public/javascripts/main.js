@@ -1,3 +1,23 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const navLinks = document.querySelectorAll("#navBar ul li h2");
+
+    navLinks.forEach((link) => {
+        link.addEventListener("click", (e) => {
+            e.preventDefault();
+
+            const targetId = link.getAttribute("href").substring(1);
+            const targetSection = document.getElementById(targetId);
+
+            if (targetSection) {
+                window.scrollTo({
+                    top: targetSection.offsetTop - 80,
+                    behavior: "smooth",
+                });
+            }
+        });
+    });
+});
+
 async function fetchProjects() {
     try {
         const mongoResponse = await axios.get('http://localhost:3000/api/data');
@@ -52,7 +72,24 @@ function changeNavBar(){
     }
 }
 
+function handleIntersection(entries, observer) {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate');
+        } else {
+            entry.target.classList.remove('animate'); 
+        }
+    });
+}
 
+const observer = new IntersectionObserver(handleIntersection, {
+    threshold: 0.5, // Adjust this threshold as needed
+});
+
+const welcomeMsg = document.querySelector('.welcome-msg');
+const aboutText = document.querySelector('.about-me');
+observer.observe(welcomeMsg);
+observer.observe(aboutText);
 
 window.onload = fetchProjects;
 window.onscroll = changeNavBar;
