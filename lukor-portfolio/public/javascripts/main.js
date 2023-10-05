@@ -1,4 +1,4 @@
-document.querySelector(".mobile-nav").addEventListener("click", function() {
+document.querySelector(".mobile-nav").addEventListener("click", function () {
     var highresNav = document.querySelector(".highres-nav");
     highresNav.style.display = highresNav.style.display === "block" ? "none" : "block";
 });
@@ -33,7 +33,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function fetchProjects() {
     try {
-        const mongoResponse = await axios.get('http://localhost:3000/api/data');
+        // Define the base URL for your API
+        let apiUrl;
+
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            // If running on localhost, use the local development server
+            apiUrl = 'http://localhost:3000/api/data';
+        } else {
+            // Otherwise, use the remote API URL
+            apiUrl = 'https://lukaszoles.render.com/api/data';
+        }
+        const mongoResponse = await axios.get(apiUrl);
         const mongoData = mongoResponse.data;
 
         const projectsContainer = document.getElementById('projectsContainer');
@@ -48,7 +58,7 @@ async function fetchProjects() {
             div.style.backgroundImage = item.imgurl;
             details.className = "details";
             buttons.className = "buttons";
-            
+
             buttons.innerHTML = `
             <a href="${item.link}"><i class="bi bi-git"></i></a>
             <a href="${item.live}"><i class="bi bi-search"></i></a>
@@ -68,14 +78,14 @@ async function fetchProjects() {
                 details.style.display = 'none';
             });
 
-            projectsContainer.appendChild(div); 
-           
+            projectsContainer.appendChild(div);
+
             div.appendChild(details);
             details.appendChild(buttons);
             details.appendChild(ul);
 
             details.style.display = 'none';
-          });
+        });
 
     } catch (error) {
         console.error('Error fetching and displaying data:', error);
@@ -92,14 +102,14 @@ function updateHighresNavDisplay() {
     }
 }
 
-function changeNavBar(){
+function changeNavBar() {
     const navBarWrapper = document.getElementById("navWrapper");
     const navBar = document.getElementById("navBar");
     const offset = navBar.offsetTop;
-    if(navBarWrapper.offsetTop > 60) {
-    navBar.classList.add("scrolled-nav");
+    if (navBarWrapper.offsetTop > 60) {
+        navBar.classList.add("scrolled-nav");
     } else {
-    navBar.classList.remove("scrolled-nav");
+        navBar.classList.remove("scrolled-nav");
     }
 }
 
@@ -108,7 +118,7 @@ function handleIntersection(entries, observer) {
         if (entry.isIntersecting) {
             entry.target.classList.add('animate');
         } else {
-            entry.target.classList.remove('animate'); 
+            entry.target.classList.remove('animate');
         }
     });
 }
