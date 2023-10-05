@@ -47,6 +47,7 @@ var config = {
   method: 'post',
   url: 'https://eu-central-1.aws.data.mongodb-api.com/app/data-otuuz/endpoint/data/v1/action/findOne',
   headers: {
+    'Access-Control-Allow-Origin': '*',
     'Content-Type': 'application/json',
     'Access-Control-Request-Headers': '*',
     'api-key': '9c6TKnAVuOm7ckSZAnAMKLpQMBz1hIiU6rUp0ICWLHaI2r1ereRRW0aCvvbgGQcb',
