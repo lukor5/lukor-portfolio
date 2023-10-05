@@ -1,3 +1,8 @@
+document.querySelector(".mobile-nav").addEventListener("click", function() {
+    var highresNav = document.querySelector(".highres-nav");
+    highresNav.style.display = highresNav.style.display === "block" ? "none" : "block";
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.querySelectorAll("#navBar ul li h2");
 
@@ -27,13 +32,19 @@ async function fetchProjects() {
 
         mongoData.forEach((item) => {
             const div = document.createElement('div');
+            const background = document.createElement('div');
             const details = document.createElement('div');
             const ul = document.createElement('ul');
+            const buttons = document.createElement('div');
             div.className = "single-project";
-            div.textContent = item.name; 
+            div.style.backgroundImage = item.imgurl;
             details.className = "details";
-            const detailsContent = `<button class="link-button" href="${item.link}">bla</button>`;
-            details.innerHTML = detailsContent;
+            buttons.className = "buttons";
+            
+            buttons.innerHTML = `
+            <a href="${item.link}"><i class="bi bi-git"></i></a>
+            <a href="${item.live}"><i class="bi bi-search"></i></a>
+            `;
 
             item.skills.forEach((skillItem) => {
                 const li = document.createElement('li');
@@ -50,7 +61,9 @@ async function fetchProjects() {
             });
 
             projectsContainer.appendChild(div); 
+           
             div.appendChild(details);
+            details.appendChild(buttons);
             details.appendChild(ul);
 
             details.style.display = 'none';
@@ -58,6 +71,16 @@ async function fetchProjects() {
 
     } catch (error) {
         console.error('Error fetching and displaying data:', error);
+    }
+}
+
+function updateHighresNavDisplay() {
+    var highresNav = document.querySelector(".highres-nav");
+
+    if (window.innerWidth > 800) {
+        highresNav.style.display = "flex";
+    } else {
+        highresNav.style.display = "none"; // or "block" if needed
     }
 }
 
@@ -93,3 +116,4 @@ observer.observe(aboutText);
 
 window.onload = fetchProjects;
 window.onscroll = changeNavBar;
+window.addEventListener("resize", updateHighresNavDisplay);
