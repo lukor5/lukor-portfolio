@@ -41,7 +41,7 @@ async function fetchProjects() {
             apiUrl = 'http://localhost:3000/api/data';
         } else {
             // Otherwise, use the remote API URL
-            apiUrl = 'https://lukaszoles.render.com/api/data';
+            apiUrl = 'https://lukaszoles.onrender.com/api/data';
         }
         const mongoResponse = await axios.get(apiUrl);
         const mongoData = mongoResponse.data;
