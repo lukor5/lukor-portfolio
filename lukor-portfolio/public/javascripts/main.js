@@ -3,8 +3,16 @@ document.querySelector(".mobile-nav").addEventListener("click", function() {
     highresNav.style.display = highresNav.style.display === "block" ? "none" : "block";
 });
 
+function windowHeightSet() {
+    let height = document.querySelector(".main");
+    const newHeight = window.innerHeight - 100;
+    height.style.height = newHeight + "px";
+
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const navLinks = document.querySelectorAll("#navBar ul li h2");
+
 
     navLinks.forEach((link) => {
         link.addEventListener("click", (e) => {
@@ -114,6 +122,8 @@ const aboutText = document.querySelector('.about-me');
 observer.observe(welcomeMsg);
 observer.observe(aboutText);
 
-window.onload = fetchProjects;
+window.addEventListener("load", fetchProjects);
+window.addEventListener("load", windowHeightSet);
+window.addEventListener("resize", windowHeightSet);
 window.onscroll = changeNavBar;
 window.addEventListener("resize", updateHighresNavDisplay);

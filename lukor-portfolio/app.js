@@ -3,6 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cors = require('cors');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -91,6 +92,10 @@ app.use('/static', express.static('node_modules/bootstrap-icons/font'));
 app.use('/assets', express.static('node_modules/particles.js'));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+
+app.use(cors({
+  origin: 'https://lukaszoles.onrender.com', // Replace with your app's domain
+}));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
