@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 var logger = require('morgan');
 const cors = require('cors');
 
@@ -65,6 +66,29 @@ axios(config)
 
 
 var app = express();
+app.use(express.json());
+app.post('/api/submit', async (req, res) => {
+  const db = client.db('messages');
+  const collection = db.collection('messages');
+  console.log('req body:',req.body);
+  
+  // Extract data from the form
+  const { name, email, message } = req.body;
+  
+  try {
+    // Save form data to MongoDB
+    const result = await collection.insertOne({
+      name,
+      email,
+      message,
+    });
+    
+    res.json({ message: 'Form data saved successfully', insertedId: result.insertedId });
+  } catch (error) {
+    console.error('Error saving form data to MongoDB', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+});
 
 app.get('/api/data', async (req, res) => {
   const db = client.db('projects');
@@ -85,7 +109,6 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
-app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
