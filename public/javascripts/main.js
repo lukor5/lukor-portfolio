@@ -115,7 +115,7 @@ async function fetchProjects() {
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
             apiUrl = 'http://localhost:3000/api/data';
         } else {
-            apiUrl = 'https://lukaszoles.onrender.com/api/data';
+            apiUrl = 'https://lukor5.github.io/lukor-portfolio/api/data';
         }
         const mongoResponse = await axios.get(apiUrl);
         const mongoData = mongoResponse.data;
